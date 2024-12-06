@@ -49,13 +49,13 @@ def kernel(matriz, tamanho, posicoes_iniciais, rng, dist_limite, caminhos):
 def programa():
     tamanho= 400
     dist_limite= 180
-    p=50000
+    p=1000000000
 
     matriz= np.zeros((tamanho+1,tamanho+1), dtype=np.int32)
     matriz[tamanho//2, tamanho//2] = 1
 
     angulos= np.random.uniform(0,2*np.pi,p)
-    distancias= np.random.uniform(dist_limite, tamanho//2, p)
+    distancias= np.random.uniform(dist_limite, tamanho, p)
     px= (np.cos(angulos) * distancias).astype(int) + tamanho//2
     py= (np.sin(angulos)*distancias).astype(int) + tamanho//2
     posicoes_iniciais= np.stack((px,py), axis=-1)

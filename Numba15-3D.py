@@ -54,17 +54,19 @@ def kernel(matriz, tamanho, posicoes_iniciais, rng, dist_limite, caminhos, xs_gp
 def programa():
     tamanho= 400
     dist_limite= 180
-    p= 1100000
+    p= 2100000
 
     matriz= np.zeros((tamanho+1,tamanho+1,tamanho+1), dtype=np.int32)
     matriz[tamanho//2, tamanho//2, tamanho//2] = 1
 
-    angulos= np.random.uniform(0,2*np.pi,p)
-    angulosz= np.random.uniform(-np.pi/2, np.pi/2, p)
-    distancias= np.random.uniform(dist_limite, tamanho//2, p)
-    px= (np.cos(angulos) * distancias).astype(int) + tamanho//2
-    py= (np.sin(angulos)*distancias).astype(int) + tamanho//2
-    pz= (np.sin(angulosz) * distancias).astype(int) + tamanho//2
+    angulos = np.random.uniform(0, 2 * np.pi, p)  # Ângulo theta no plano XY
+    angulosz = np.random.uniform(0,np.pi,p)  # Converte para ângulo φ correspondente
+    distancias = np.random.uniform(dist_limite, tamanho // 2, p)
+
+    # Calcula as coordenadas x, y, z
+    px = (np.cos(angulos) * distancias).astype(int) + tamanho // 2
+    py = (np.sin(angulos) * distancias).astype(int) + tamanho // 2
+    pz = (np.cos(angulosz) * distancias).astype(int) + tamanho // 2
 
     posicoes_iniciais= np.stack((px,py,pz), axis=-1)
 
@@ -103,7 +105,7 @@ def programa():
     fig = plt.figure(figsize=(10,7))
     ax= fig.add_subplot(111, projection='3d')
     
-    ax.scatter(xs_cpu,ys_cpu,zs_cpu)
+    ax.scatter(xs_cpu,ys_cpu,zs_cpu, s=0.3)
     ax.set_xlim(0,400)
     ax.set_ylim(0,400)
     ax.set_zlim(0,400)
